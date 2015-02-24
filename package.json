@@ -1,12 +1,14 @@
 {
   "name": "simple-twitter-bot",
   "version": "0.1.0",
-  "description": "A simple framework for creating a Twitter bot.",
+  "description": "A simple Twitter bot, based on simple-twitter-bot.",
   "main": "bot.js",
   "dependencies": {
-    "twit": "~1.1.9"
+    "express": "^4.12.0",
+    "newrelic": "^1.17.0",
+    "twit": "~1.1.9",
+    "underscore": "^1.8.2"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -8,12 +8,13 @@ Twitter's streaming API.
 
 1. `git clone https://github.com/rfreebern/simple-twitter-bot.git && cd simple-twitter-bot && npm install`
 2. Create an application on http://dev.twitter.com
-3. Generate the necessary tokens.
-4. Copy `config.js-dist` to `config.js`
-5. Put your tokens in `config.js`
-6. Put some keywords for your bot to follow in the `keywords` array in `config.js`
-7. Add whatever logic you want to the `valid` and `response` functions in `config.js`
-8. `node bot.js > output.log &`
+3. Generate the necessary tokens: https://apps.twitter.com/
+4. ~~Copy `config.js-dist` to `config.js`~~
+5. Put your tokens in `.env`
+6. Put some keywords for your bot to follow in the `keywords` array in ~~`config.js`~~ `bot.js`
+7. ~~Add whatever logic you want to the `valid` and `response` functions in `config.js`~~
+8. Install [Heroku Foreman](https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up).
+8. Run ~~`node bot.js > output.log &`~~ `foreman start web`
 
 ## What Uses It
 
