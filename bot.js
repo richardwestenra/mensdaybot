@@ -4,7 +4,6 @@ var _ = require("underscore");
 
 var Twit = require('twit'),
     debug = false;
-debug = true;
 
 var valid = function (tweet) {
     // Don't reply to RTs
