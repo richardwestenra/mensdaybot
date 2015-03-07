@@ -12,7 +12,7 @@ var valid = function (tweet) {
 
 
 // Matched array of keywords and corresponding replies:
-var keyword = ["international men's day"];
+var keyword = ["international men's day", "international mens day"];
 var reply = "It's November 19th.";
 
 
