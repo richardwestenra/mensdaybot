@@ -7,12 +7,22 @@ var Twit = require('twit'),
 debug = true;
 
 var valid = function (tweet) {
-    return true;
+    // Don't reply to RTs
+    return tweet.retweeted_status === undefined;
 };
 
 
 // Matched array of keywords and corresponding replies:
-var keyword = ["international men's day", "international mens day"];
+var keywords = [
+    "international men's day",
+    "international man's day",
+    "international mens day",
+    "international mans day",
+    "national men's day",
+    "national man's day",
+    "national mens day",
+    "national mans day"
+];
 var reply = "It's November 19th.";
 
 
@@ -24,7 +34,8 @@ var T = new Twit({
     access_token_secret: process.env.access_token_secret
 });
 
-var stream = T.stream('statuses/filter', { track: keyword });
+
+var stream = T.stream('statuses/filter', { track: keywords });
 stream.on('tweet', function (tweet) {
 
     if (valid(tweet)) {
@@ -46,9 +57,9 @@ stream.on('tweet', function (tweet) {
             var now = new Date();
             console.log('[' + now.toJSON() + '] ' + response);
         }
-    } else {
-        var now = new Date();
-        console.log('[' + now.toJSON() + '] INVALID: @' + tweet.user.screen_name + ':' + tweet.text);
+    // } else {
+    //     var now = new Date();
+    //     console.log('[' + now.toJSON() + '] INVALID: @' + tweet.user.screen_name + ':' + tweet.text);
     }
 });
 
