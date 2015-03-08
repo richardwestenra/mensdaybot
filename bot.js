@@ -4,7 +4,7 @@ var _ = require("underscore");
 
 var Twit = require('twit'),
     debug = false;
-debug = true;
+// debug = true;
 
 
 
