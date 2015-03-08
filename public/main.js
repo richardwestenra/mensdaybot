@@ -59,10 +59,24 @@ $(function(){
 		});
 	});
 
-	$.get( '/query', function(data) {
-		// $('#results').html(data);
-		console.log(data.backlog);
-		update(data);
+	$('#clear').on('click', function(e){
+		e.preventDefault();
+		$action.html('');
+
+		$.get( '/query', {clear:'clear'}, function(data) {
+			update(data);
+			$action.text('Backlog emptied.');
+		});
 	});
+
+	function refresh(){
+		$.get( '/query', function(data) {
+			update(data);
+			$action.text('Backlog updated.');
+		});
+	}
+
+	refresh();
+	window.setInterval(refresh,10000); // refresh every 10 seconds
 	
 });

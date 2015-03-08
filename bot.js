@@ -4,6 +4,7 @@ var _ = require("underscore");
 
 var Twit = require('twit'),
     debug = false;
+debug = true;
 
 
 
@@ -110,6 +111,9 @@ stream.on('reconnect', function (item) { console.log('Stream reconnected.'); });
 app.get('/query', function(req, res){
     var p = req.query;
 
+    if (p.clear === 'clear') {
+        backlog = [];
+    }
     if (p.approve !== undefined) {
         var tweet = _.find(backlog,function(d){
             return +d.id === +p.id;
