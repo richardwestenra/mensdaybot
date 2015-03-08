@@ -4,6 +4,21 @@ var _ = require("underscore");
 
 var Twit = require('twit'),
     debug = false;
+debug = true;
+
+
+
+// Express server page:
+var express = require('express');
+var app = express();
+
+app.set('port', (process.env.PORT || 5000));
+app.use(express.static(__dirname + '/public'));
+app.listen(app.get('port'), function() {
+  console.log("Node app is running at localhost:" + app.get('port'));
+});
+
+
 
 // Work out whether a search term matches a given tweet
 function hasKeyword(searchterms, text){
@@ -82,19 +97,9 @@ stream.on('reconnect', function (item) { console.log('Stream reconnected.'); });
 
 
 
-// Express server page:
-var express = require('express');
-var app = express();
-
-app.set('port', (process.env.PORT || 5000));
-app.use(express.static(__dirname + '/public'));
-
-app.get('/', function(request, response) {
-    var result = 'Hello world!';
-    response.send(result);
+// Handle AJAX requests
+app.get('/query', function(req, res){
+    var val = req.query.search;
+    console.log(val);
+    res.send(val);
 });
-
-app.listen(app.get('port'), function() {
-  console.log("Node app is running at localhost:" + app.get('port'));
-});
-
