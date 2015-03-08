@@ -1,0 +1,50 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+	background: #fafafa;
+}
+#content {
+	margin: 0 auto;
+	max-width: 800px;
+}
+#action {
+	margin-left: 2em;
+	color: #888;
+}
+#tweets {
+	list-style: none;
+	padding: 0;
+	margin: 1em 0;
+}
+li {
+	padding: 1em;
+}
+li:nth-child(odd) {
+	background: #eee;
+}
+.hash {
+	font-size: 1.2em;
+	font-weight: bold;
+	padding: 5px 10px;
+}
+.btn {
+	background: steelblue;
+	text-decoration: none;
+	display: inline-block;
+	margin-right: 10px;
+	border: none;
+	color: white;
+	cursor: pointer;
+	padding: 8px 15px;
+	margin-bottom: 5px;
+}
+.btn:hover, .btn:focus {
+	box-shadow: 0 0 5px steelblue;
+}
+#approve {
+	background: green;
+}
+#reject {
+	background: #a00;
+}

@@ -52,6 +52,9 @@ var keywords = [
 ];
 var reply = "It's November 19th.";
 
+var backlog = [];
+var auto = true;
+
 
 // Start the twitter stream:
 var T = new Twit({
@@ -63,32 +66,39 @@ var T = new Twit({
 
 
 var stream = T.stream('statuses/filter', { track: keywords });
-stream.on('tweet', function (tweet) {
 
+stream.on('tweet', function (tweet) {
     if (valid(tweet)) {
-        var response = '@'+ tweet.user.screen_name + ' ' + reply;
-        if (!debug) {
-            var params = {
-                status: response,
-                in_reply_to_status_id: tweet.id_str
-            };
-            T.post('statuses/update', params, function (err, reply) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    var now = new Date();
-                    console.log('[' + now.toJSON() + '] SENT: ' + response);
-                }
-            });
-        } else {
-            var now = new Date();
-            console.log('[' + now.toJSON() + '] ' + response);
+        if (auto) {
+            // Reply:
+            sendTweet(tweet);
+        } else  {
+            // Add tweet to backlog:
+            backlog.push(tweet);
         }
-    // } else {
-    //     var now = new Date();
-    //     console.log('[' + now.toJSON() + '] INVALID: @' + tweet.user.screen_name + ':' + tweet.text);
     }
 });
+
+function sendTweet(tweet){
+    var response = '@'+ tweet.user.screen_name + ' ' + reply;
+    if (!debug) {
+        var params = {
+            status: response,
+            in_reply_to_status_id: tweet.id_str
+        };
+        T.post('statuses/update', params, function (err, reply) {
+            if (err) {
+                console.log(err);
+            } else {
+                var now = new Date();
+                console.log('[' + now.toJSON() + '] SENT: ' + response);
+            }
+        });
+    } else {
+        var now = new Date();
+        console.log('[' + now.toJSON() + '] ' + response);
+    }
+}
 
 stream.on('warning', function (item) { console.log('WARNING: ' + item); });
 stream.on('disconnect', function (item) { console.log('Stream disconnected.'); });
@@ -99,7 +109,31 @@ stream.on('reconnect', function (item) { console.log('Stream reconnected.'); });
 
 // Handle AJAX requests
 app.get('/query', function(req, res){
-    var val = req.query.search;
-    console.log(val);
-    res.send(val);
+    var p = req.query;
+
+    if (p.approve !== undefined) {
+        var tweet = _.find(backlog,function(d){
+            return +d.id === +p.id;
+        });
+        var now = new Date();
+        if (p.approve === 'true' || p.approve === true) {
+            console.log('[' + now.toJSON() + '] Approved tweet: @' + tweet.user.screen_name + ':' + tweet.text);
+            sendTweet(tweet);
+        } else {
+            console.log('[' + now.toJSON() + '] Rejected tweet: @' + tweet.user.screen_name + ':' + tweet.text);
+        }
+        backlog = _.reject(backlog,function(d){
+            return +d.id === +p.id;
+        });
+    }
+
+    if (p.mode !== undefined) {
+        // Toggle mode
+        auto = p.mode !== 'Auto';
+    }
+
+    res.send({
+        mode: auto ? 'Auto' : 'Manual',
+        backlog: backlog
+    });
 });

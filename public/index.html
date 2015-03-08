@@ -6,22 +6,19 @@
 	<meta name="robots" content="noindex">
 	<meta name="viewport" content="width=device-width">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.2/underscore-min.js"></script>
 	<script src="main.js"></script>
-	<style>
-	#search {
-		text-align: center;
-		width:500px;
-		height: 70px;
-		font-size:3.5em;
-		border-radius:8px;
-	}
-	</style>
+	<link rel="stylesheet" href="main.css" />
 </head>
 <body>
-	<h1>Hello world!</h1>
 	<div id="content">
-		<input type="text" id="search" type="search" placeholder="Search"/>
-		<h2 id="results"></h2>
+		<h1><a href="https://twitter.com/MensDayBot" target="_blank">Men's Day Bot</a> Admin</h1>
+		<p>Toggle mode: <a href="#" class="btn" id="mode">Auto</a> Refresh list: <a href="#" class="btn" id="refresh">Refresh</a> <span id="action"></span></p>
+
+		<ul id="tweets">
+		</ul>
 	</div>
+	<script type="text/template" id="reply">
+	</script>
 </body>
 </html>
