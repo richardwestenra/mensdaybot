@@ -5,9 +5,22 @@ var _ = require("underscore");
 var Twit = require('twit'),
     debug = false;
 
+// Work out whether a search term matches a given tweet
+function hasKeyword(searchterms, text){
+    return _.some(searchterms,function(d){
+        return new RegExp(d, 'ig').test(text);
+    });
+}
+
 var valid = function (tweet) {
+    // Don't reply to tweets mentioning November 19th:
+    var November = hasKeyword(['November','Nov','19','19th'], tweet.text);
+    // Don't reply to Richard Herring
+    var Richard = tweet.user.screen_name === 'Herring1967';
     // Don't reply to RTs
-    return tweet.retweeted_status === undefined;
+    var RT = tweet.retweeted_status !== undefined;
+
+    return !November && !Richard && !RT;
 };
 
 
