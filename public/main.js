@@ -55,7 +55,7 @@ $(function(){
 
 		$.get( '/query', function(data) {
 			update(data);
-			$action.text('Refeshed!');
+			$action.text('Refreshed!');
 		});
 	});
 
